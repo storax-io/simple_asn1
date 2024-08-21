@@ -461,7 +461,8 @@ fn from_der_(i: &[u8], start_offset: usize) -> Result<Vec<ASN1Block>, ASN1Decode
             // SET
             Some(0x11) => match from_der_(body, start_offset + index) {
                 Ok(items) => result.push(ASN1Block::Set(soff, items)),
-                Err(e) => return Err(e),
+                Err(e) => result.push(ASN1Block::Set(soff, vec![]))
+                //Err(e) => return Err(e),
             },
             // PRINTABLE STRING
             Some(0x13) => {
